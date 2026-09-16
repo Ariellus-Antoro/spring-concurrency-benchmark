@@ -30,3 +30,6 @@ jmeter.log
 dump.hprof
 
 .env
+
+.opencode
+openspec/
