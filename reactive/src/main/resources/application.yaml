@@ -1,0 +1,17 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: reactive-webflux
+  r2dbc:
+    url: r2dbc:postgresql://${DB_HOST:localhost}:5432/${DB_NAME:ticket_db_reactive}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:arabawa}
+    pool:
+      initial-size: 10
+      max-size: 10
+      max-idle-time: 30000
+    sql:
+      init:
+        mode: always
