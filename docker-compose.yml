@@ -1,0 +1,92 @@
+services:
+  db-platform:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: ticket_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata-platform:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d ticket_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  db-reactive:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: arabawa
+      POSTGRES_DB: ticket_db_reactive
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata-reactive:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d ticket_db_reactive"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  db-virtual:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: arabawa
+      POSTGRES_DB: ticket_db_virtual
+    ports:
+      - "5434:5432"
+    volumes:
+      - pgdata-virtual:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d ticket_db_virtual"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  platform-threads:
+    build: ./platform_threads
+    environment:
+      DB_HOST: db-platform
+      DB_NAME: ticket_db
+      DB_USER: postgres
+      DB_PASS: password
+    ports:
+      - "8080:8080"
+    depends_on:
+      db-platform:
+        condition: service_healthy
+
+  reactive:
+    build: ./reactive
+    environment:
+      DB_HOST: db-reactive
+      DB_NAME: ticket_db_reactive
+      DB_USER: postgres
+      DB_PASS: arabawa
+    ports:
+      - "8081:8080"
+    depends_on:
+      db-reactive:
+        condition: service_healthy
+
+  virtual-threads:
+    build: ./virtual-threads
+    environment:
+      DB_HOST: db-virtual
+      DB_NAME: ticket_db_virtual
+      DB_USER: postgres
+      DB_PASS: arabawa
+    ports:
+      - "8082:8080"
+    depends_on:
+      db-virtual:
+        condition: service_healthy
+
+volumes:
+  pgdata-platform:
+  pgdata-reactive:
+  pgdata-virtual:

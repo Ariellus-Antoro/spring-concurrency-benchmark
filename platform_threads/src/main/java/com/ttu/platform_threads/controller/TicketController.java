@@ -12,6 +12,7 @@ import com.ttu.platform_threads.dto.CheckoutRequest;
 import com.ttu.platform_threads.dto.CheckoutResponse;
 import com.ttu.platform_threads.dto.SeatAvailabilityResponse;
 import com.ttu.platform_threads.service.TicketService;
+import jakarta.validation.Valid;
 import com.ttu.platform_threads.service.TokenGenerationService;
 
 import lombok.RequiredArgsConstructor;
@@ -29,12 +30,12 @@ public class TicketController {
     }
 
     @PostMapping ("/checkout")
-    public ResponseEntity<CheckoutResponse> processCheckout(@RequestBody CheckoutRequest request){
+    public ResponseEntity<CheckoutResponse> processCheckout(@Valid @RequestBody CheckoutRequest request){
         return ResponseEntity.ok(ticketService.checkoutTicket(request));
     }
 
     @PostMapping ("/token")
-    public ResponseEntity<String> generateToken(@RequestBody CheckoutRequest request){
+    public ResponseEntity<String> generateToken(@Valid @RequestBody CheckoutRequest request){
         return ResponseEntity.ok(tokenGenerationService.generateEncryptedToken(request.userId(), request.concertId()));
     }
 }

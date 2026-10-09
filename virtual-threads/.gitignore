@@ -31,3 +31,19 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Local Credentials ###
+.env
+.env.*
+informasi.txt
+
+### Research Outputs (Profiling & Load Testing) ###
+*.jfr
+*.hprof
+*.jtl
+*.csv
+jmeter.log
+report/
+dashboard/
+jmeter-report/
+jmeter-reports/

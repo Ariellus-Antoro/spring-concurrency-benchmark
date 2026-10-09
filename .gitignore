@@ -1,4 +1,9 @@
+# ============================================================
+# TTU2 - War Tiket Performance Benchmark
+# Root .gitignore
+# ============================================================
 
+# ---------- Java / Maven / Gradle ----------
 target/
 build/
 out/
@@ -6,30 +11,56 @@ out/
 *.class
 *.jar
 *.war
+.mvn/wrapper/maven-wrapper.jar
 
+# ---------- IDE ----------
 .idea/
 *.iml
+*.iws
+*.ipr
 .vscode/
 .settings/
 .classpath
 .project
 .factorypath
+.apt_generated
+.sts4-cache
 
-
+# ---------- OS ----------
 .DS_Store
 Thumbs.db
 
+# ---------- Logs ----------
 *.log
 logs/
 
+# ---------- Local credentials ----------
+.env
+.env.*
+informasi.txt
 
+# ============================================================
+# Research-specific outputs (CRITICAL - large binaries)
+# ============================================================
+# Java Flight Recorder & heap dumps
 *.jfr
+*.hprof
+
+# Apache JMeter raw results & logs
 *.jtl
 *.csv
 jmeter.log
-dump.hprof
 
-.env
+# JMeter HTML Dashboard reports
+report/
+dashboard/
+jmeter-report/
+jmeter-reports/
+**/report/
+**/dashboard/
+**/jmeter-report/
+**/jmeter-reports/
 
+# ---------- Tooling / workflow ----------
 .opencode
 openspec/

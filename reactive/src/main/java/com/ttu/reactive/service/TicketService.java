@@ -34,7 +34,7 @@ public class TicketService {
 
     @Transactional 
     public Mono<CheckoutResponse> checkoutTicket(CheckoutRequest request){
-        return concertRepository.findById(request.userId())
+        return concertRepository.findById(request.concertId())
             .switchIfEmpty(Mono.error(new RuntimeException("Concert not found")))
             .flatMap(concert ->{
                 if(concert.getAvailableSeats() <= 0){
